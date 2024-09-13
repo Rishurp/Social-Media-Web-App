@@ -21,14 +21,13 @@ The project is currently **under construction**, and new features and improvemen
 - **Backend**: Node.js, Express.js (link to the backend repo if separate)
 - **Database**: MongoDB
 - **API**: REST API
-- **Deployment**: Deployed on [Netlify](https://www.netlify.com/) for the frontend (Update the platform if different)
-
+  
 ## Installation
 
 ### Frontend
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/your-repo.git
+   git clone https://github.com/Rishurp/Social-Media-Web-App-Frontend.git
    ```
 2. Navigate to the frontend folder:
    ```bash
@@ -44,7 +43,7 @@ The project is currently **under construction**, and new features and improvemen
    ```
 
 ### Backend
-Follow instructions in the [Backend Repository](https://github.com/your-username/backend-repo-link).
+Follow instructions in the [Backend Repository](https://github.com/Rishurp/Social-Media-Web-App-Backend).
 
 
 ## How to Contribute
@@ -58,7 +57,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Contact
 
 For any inquiries or issues, feel free to open an issue or contact me at rishupandey3102@gmail.com.
-
----
-
-This README provides a clear overview of your project, mentions that it's still under construction, and includes deployment details. Adjust the links and sections as needed!
