@@ -20,7 +20,6 @@ const Register = () => {
       password: password,
     };
 
-    // console.log(validateInput(formData) !== "");
     if (validateInput(formData) !== "") {
       enqueueSnackbar(validateInput(formData));
     } else {

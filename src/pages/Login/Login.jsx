@@ -18,21 +18,23 @@ const Login = () => {
     };
     if (validateInput(data) !== "") {
       enqueueSnackbar(validateInput(data));
+      return;
     } else {
       try {
         let response = await axios.post(
           `${config.backEndpoint}/auth/login`,
           data
         );
+
+        console.log(response);
         if (response.status === 200) {
-          enqueueSnackbar("Login Successfully.");
-          persistLogin(response.data.response);
-          console.log(response);
           navigate("/");
-        } else {
-          enqueueSnackbar("Wrong Credentials.");
+          persistLogin(response.data);
+          console.log(response);
+          enqueueSnackbar("Login Successfully.");
         }
       } catch (err) {
+        enqueueSnackbar("Wrong Credentials.");
         return err;
       }
     }
@@ -62,8 +64,9 @@ const Login = () => {
   };
 
   const persistLogin = (loginData) => {
-    localStorage.setItem("Username", loginData.name);
-    localStorage.setItem("userId", loginData._id);
+    localStorage.setItem("Username", loginData.response.name);
+    localStorage.setItem("userId", loginData.response._id);
+    localStorage.setItem("token", loginData.token);
   };
 
   return (
@@ -74,6 +77,7 @@ const Login = () => {
             <img
               className="w-full h-full object-cover"
               src="https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600"
+              alt="pic"
             />
           </div>
           <div className="absolute bg-gradient-to-r from-[rgb(39,11,96)] to-[rgb(39,11,96)] opacity-50 inset-0" />

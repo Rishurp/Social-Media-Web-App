@@ -9,7 +9,7 @@ const LeftBar = () => {
   const user = localStorage.getItem("Username");
 
   return (
-    <div className="w-[25%]  p-6 flex flex-col max-sm:hidden  ">
+    <div className="w-[25%]  p-6 flex flex-col max-sm:hidden max-md:hidden  ">
       <section className=" border-b  border-slate-300 ">
         <div className="flex items-center py-4 hover:cursor-pointer">
           <img
@@ -18,29 +18,29 @@ const LeftBar = () => {
           />
           <span className="font-medium text-lg px-3">{user}</span>
         </div>
-        <div className="flex py-4 items-center hover:cursor-pointer">
+        {/* <div className="flex py-4 items-center hover:cursor-pointer">
           <PeopleAltTwoToneIcon />
           <span className="px-4 font-medium text-lg ">Friends</span>
-        </div>
-        <div className="flex py-4 items-center hover:cursor-pointer ">
+        </div> */}
+        {/* <div className="flex py-4 items-center hover:cursor-pointer ">
           <Diversity3TwoToneIcon />
           <span className="px-4 font-medium text-lg">Groups</span>
-        </div>
+        </div> */}
       </section>
       <section className=" flex py-4 flex-col justify-around w-full ">
         <span> Your shortcuts</span>
 
-        <div className="flex py-4 items-center hover:cursor-pointer">
-          <MarkunreadTwoToneIcon />
-          <span className="px-4 font-medium text-lg">Messages</span>
-        </div>
-        <div className="flex py-4 items-center hover:cursor-pointer">
+        {/* <div className="flex py-4 items-center hover:cursor-pointer">
+            <MarkunreadTwoToneIcon />
+            <span className="px-4 font-medium text-lg">Messages</span>
+          </div> */}
+        {/* <div className="flex py-4 items-center hover:cursor-pointer">
           <CalendarMonthTwoToneIcon />
           <span className="px-4 font-medium text-lg">Events</span>
-        </div>
+        </div> */}
         <div className="flex py-4 items-center hover:cursor-pointer">
           <DynamicFeedTwoToneIcon />
-          <span className="px-4 font-medium text-lg">Posts</span>
+          <span className="px-4 font-medium text-lg"> My Posts</span>
         </div>
       </section>
     </div>

@@ -19,6 +19,7 @@ export default function BasicMenu() {
     setAnchorEl(null);
     localStorage.removeItem("Username");
     localStorage.removeItem("userId");
+    localStorage.removeItem("token");
     navigate("/login");
   };
 
