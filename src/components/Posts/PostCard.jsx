@@ -73,6 +73,7 @@ const Post = ({ postData, onDeletePost, onUpdatePost }) => {
                 <img
                   src={userImage}
                   className="w-[40px] h-[40px] rounded-full"
+                  alt="userImage"
                 />
               </div>
               <div className="px-2 flex flex-col">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 // import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
@@ -13,27 +13,39 @@ import MenuDropDown from "./microComponents/menuDropDown";
 import axios from "axios";
 import { config } from "../App";
 import userImage from "../assets/user.png";
+import SearchList from "../components/microComponents/SearchList";
 
 const Navbar = ({ theme, handleThemeMode }) => {
   let inputColor = theme === "dark" ? "#FFFFFF" : "inherit";
   const user = localStorage.getItem("Username");
 
-  const [searchUser, setSearchUser] = React.useState("");
-  const [isSearchOpen, setIsSearchOpen] = React.useState(false);
+  const [searchUserData, setSearchUserData] = useState([]);
+  // const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [timerId, setTimerId] = useState(null);
+  const [searchKey, updateSearchKey] = useState("");
 
-  const performSearch = async (e) => {
-    setIsSearchOpen(true);
+  const performSearch = async () => {
     try {
       let response = await axios.get(
-        `${config.backEndpoint}/users/search/user?username=${e.target.value}`
+        `${config.backEndpoint}/users/search/user?username=${searchKey}`
       );
-      setSearchUser(response.data);
+      setSearchUserData(response.data);
 
       console.log(response.data);
     } catch {
       console.log("error");
     }
   };
+
+  useEffect(() => {
+    if (!searchKey) {
+      setSearchUserData([]);
+    } else {
+      clearTimeout(timerId);
+    }
+    const debounceTimerId = setTimerId(() => performSearch(), 200);
+    setSearchUserData(debounceTimerId);
+  }, [searchKey]);
 
   return (
     <div className="flex dark:bg-black bg-white justify-between p-4 w-full border-b border-b-gray-300 px-10 max-sm:p-2 max-sm:px-1 fixed top-0 z-[1000]">
@@ -64,15 +76,18 @@ const Navbar = ({ theme, handleThemeMode }) => {
           <GridViewOutlinedIcon className="hover:cursor-pointer" />
         </div> */}
 
-        <div className="w-[60%] md:w-[40%] max-sm:hidden">
+        <div className="w-[60%] md:w-[40%] max-sm:hidden relative">
+          {" "}
+          {/* Add relative positioning */}
           <TextField
             className="w-full"
             id="outlined-search"
             placeholder="Search"
-            onChange={performSearch}
+            onChange={(event) => updateSearchKey(event.target.value)}
             InputProps={{
               style: {
                 color: inputColor,
+                border: "1px solid",
               },
               startAdornment: (
                 <InputAdornment position="start">
@@ -81,9 +96,8 @@ const Navbar = ({ theme, handleThemeMode }) => {
               ),
             }}
           />
-          {/* {isSearchOpen && (
-          //  <UserSeggestion/>
-          )} */}
+          {searchUserData && <SearchList userData={searchUserData} />}{" "}
+          {/* Conditionally render */}
         </div>
       </div>
       <div className="flex justify-around w-[50%] lg:w-[30%] items-center max-sm:w-full">

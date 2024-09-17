@@ -14,39 +14,6 @@ import { enqueueSnackbar } from "notistack";
 import userImage from "../../../src/assets/user.png";
 import { useNavigate } from "react-router-dom";
 const Profile = () => {
-  //[ const [postData, setPostData] = useState([]);]
-  // const post = [
-  //   {
-  //     id: 1,
-  //     name: "John Doe",
-  //     userId: 1,
-  //     profilePic:
-  //       "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1600",
-  //     desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-  //     img: "https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Jane Doe",
-  //     userId: 2,
-  //     profilePic:
-  //       "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1600",
-  //     desc: "Tenetur iste voluptates dolorem rem commodi voluptate pariatur, voluptatum, laboriosam consequatur enim nostrum cumque! Maiores a nam non adipisci minima modi tempore.",
-  //   },
-  // ];
-
-  // const getData = async () => {
-  //   let response = await axios.get(`${config.backendEndpint}/posts`);
-  //   console.log(response);
-  //   if (response.status === 200) {
-  //     setPostData(response.data);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getData();
-  // }, [postData]);
-
   const [postData, setPostData] = useState([]);
   const userid = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
@@ -156,16 +123,16 @@ const Profile = () => {
   }, [token]);
 
   return (
-    <div className="bg-slate-200 dark:bg-zinc-800 h-full w-full  flex flex-col ">
-      <div>
+    <div className="bg-slate-200 dark:bg-zinc-800 h-full w-full flex flex-col overflow-y-auto ">
+      <div className="relative">
         <img
           src="https://images.pexels.com/photos/13440765/pexels-photo-13440765.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
           alt=""
-          className="h-full w-full max-h-[350px] rounded-md "
+          className="h-full w-full max-h-[350px] rounded-md"
         />
         <img
           src={userImage}
-          className=" max-sm:hidden sm:w-[200px] sm:h-[200px]   rounded-full  absolute     sm:right-[245px] lg:right-[350px] xl:right-[460px]    2xl:left-0 2xl:right-[125px] m-auto sm:top-[300px]   z-[999]"
+          className="absolute max-sm:hidden sm:w-[200px] sm:h-[200px] rounded-full sm:right-1/2 transform sm:translate-x-1/2 sm:top-[225px] max-sm:w-[150px] max-sm:h-[150px] max-sm:top-[150px] z-[999]"
           alt=""
         />
 
