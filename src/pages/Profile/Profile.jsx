@@ -13,23 +13,26 @@ import { config } from "../../App";
 import { enqueueSnackbar } from "notistack";
 import userImage from "../../../src/assets/user.png";
 import { useNavigate } from "react-router-dom";
+
 const Profile = () => {
   const [postData, setPostData] = useState([]);
-  const userid = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const user = localStorage.getItem("Username");
   const navigate = useNavigate();
+  const searchUserId = localStorage.getItem("searchUser");
+  const [userData, setUserData] = useState({});
 
   const getPost = async () => {
     try {
       const response = await axios.get(
-        `${config.backEndpoint}/posts/${userid}`,
+        `${config.backEndpoint}/posts/${searchUserId}`,
         {
           headers: {
             Authorization: "Bearer " + token,
           },
         }
       );
+
       if (response.status === 200) {
         setPostData(
           response.data.sort(
@@ -114,13 +117,33 @@ const Profile = () => {
     setPostData([newPost, ...postData]);
   };
 
+  console.log(postData);
   useEffect(() => {
     if (!token) {
       navigate("/login");
     } else {
       getPost();
     }
-  }, [token]);
+  }, [token, searchUserId]);
+
+  let getUserData = async () => {
+    try {
+      let response = await axios.get(
+        config.backEndpoint + "/users/" + searchUserId
+      );
+      if (response.status === 200) {
+        setUserData(response.data);
+        console.log(userData);
+      } else {
+        enqueueSnackbar("failed to fetch user info");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    getUserData();
+  }, [searchUserId]);
 
   return (
     <div className="bg-slate-200 dark:bg-zinc-800 h-full w-full flex flex-col overflow-y-auto ">
@@ -139,7 +162,7 @@ const Profile = () => {
         <div className="profile-Info  px-8  max-sm:p-0">
           <div className="p-8 pt-14 px-8 max-sm:px-6 m-4 bg-white dark:bg-black dark-text-white rounded-lg flex flex-col justify-center items-center">
             <div>
-              <span className="text-3xl font-semibold">{user}</span>
+              <span className="text-3xl font-semibold">{userData.name}</span>
             </div>
             <div className="flex justify-around py-2 w-full">
               <div className="flex">

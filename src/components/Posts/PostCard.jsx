@@ -14,7 +14,7 @@ import axios from "axios";
 const Post = ({ postData, onDeletePost, onUpdatePost }) => {
   const [isLiked, setLike] = useState(false);
   const [isCommentOpen, setCommentOpen] = useState(false);
-  const userid = localStorage.getItem("userId");
+  const userid = localStorage.getItem("userId")
   const username = localStorage.getItem("Username");
   const [isOpen, setIsOpen] = useState(false);
   const [isUpdate, setUpdate] = useState(false);
@@ -68,7 +68,7 @@ const Post = ({ postData, onDeletePost, onUpdatePost }) => {
       <div className="postCard p-8 m-4 bg-white shadow-lg dark:bg-black dark:text-white rounded-lg ">
         <div className="flex justify-between">
           <Link to={`/profile/${userid}`}>
-            <div className="userInfo flex items-center">
+            <div onClick={() => localStorage.setItem("searchUser", userid)} className="userInfo flex items-center ">
               <div>
                 <img
                   src={userImage}

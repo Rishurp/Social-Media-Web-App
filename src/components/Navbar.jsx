@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 // import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
@@ -20,7 +20,7 @@ const Navbar = ({ theme, handleThemeMode }) => {
   const user = localStorage.getItem("Username");
 
   const [searchUserData, setSearchUserData] = useState([]);
-  // const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [timerId, setTimerId] = useState(null);
   const [searchKey, updateSearchKey] = useState("");
 
@@ -37,9 +37,13 @@ const Navbar = ({ theme, handleThemeMode }) => {
     }
   };
 
+  const handleSearch = () => {
+    setIsSearchOpen(!isSearchOpen);
+  };
   useEffect(() => {
     if (!searchKey) {
       setSearchUserData([]);
+      setIsSearchOpen(false);
     } else {
       clearTimeout(timerId);
     }
@@ -82,13 +86,16 @@ const Navbar = ({ theme, handleThemeMode }) => {
           <TextField
             className="w-full"
             id="outlined-search"
+            value={searchKey}
             placeholder="Search"
             onChange={(event) => updateSearchKey(event.target.value)}
+            onClick={handleSearch}
             InputProps={{
               style: {
                 color: inputColor,
                 border: "1px solid",
               },
+
               startAdornment: (
                 <InputAdornment position="start">
                   <SearchIcon className="dark:text-white" />
@@ -96,7 +103,7 @@ const Navbar = ({ theme, handleThemeMode }) => {
               ),
             }}
           />
-          {searchUserData && <SearchList userData={searchUserData} />}{" "}
+          {isSearchOpen  ? (searchUserData && <SearchList userData={searchUserData} />) : ""}
           {/* Conditionally render */}
         </div>
       </div>
