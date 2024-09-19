@@ -21,6 +21,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const searchUserId = localStorage.getItem("searchUser");
   const [userData, setUserData] = useState({});
+  const [isFollow, setFollow] = useState(false);
 
   const getPost = async () => {
     try {
@@ -51,6 +52,10 @@ const Profile = () => {
         enqueueSnackbar("Failed to fetch posts", { variant: "error" });
       }
     }
+  };
+
+  const handleFollow = () => {
+    setFollow(!isFollow);
   };
 
   const handleDelete = async (id) => {
@@ -165,7 +170,7 @@ const Profile = () => {
               <span className="text-3xl font-semibold">{userData.name}</span>
             </div>
             <div className="flex justify-around py-2 w-full">
-              <div className="flex">
+              {/* <div className="flex">
                 <div className="px-2 text-blue-600">
                   <LinkedInIcon />
                 </div>
@@ -175,30 +180,42 @@ const Profile = () => {
                 <div className="px-2">
                   <GitHubIcon />
                 </div>
-              </div>
+              </div> */}
 
-              <div className=" text-red-600 max-sm:hidden">
+              {/* <div className=" text-red-600 max-sm:hidden">
                 <LocationOnIcon />
                 <span className="text-black dark:text-white"> New York</span>
-              </div>
-              <div>
+              </div> */}
+              {/* <div>
                 <LanguageIcon />
                 <span className="px-1">jane.dev</span>
-              </div>
+              </div> */}
 
-              <div className="flex">
+              {/* <div className="flex">
                 <div className="px-2">
                   <MailOutlineIcon />
                 </div>
                 <div>
                   <MoreVertIcon />
                 </div>
-              </div>
+              </div> */}
             </div>
             <div>
-              <button className=" px-3 py-1 rounded-md text-white hover:bg-blue-800 bg-blue-500">
-                Follow
-              </button>
+              {!isFollow ? (
+                <button
+                  onClick={handleFollow}
+                  className=" px-3 py-1 rounded-md text-white hover:bg-blue-800 bg-blue-500"
+                >
+                  Follow
+                </button>
+              ) : (
+                <button
+                  onClick={handleFollow}
+                  className=" px-3 py-1 rounded-md text-white hover:bg-slate-800 bg-slate-700"
+                >
+                  Following
+                </button>
+              )}
             </div>
           </div>
         </div>
