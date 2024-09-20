@@ -13,6 +13,7 @@ import { config } from "../../App";
 import { enqueueSnackbar } from "notistack";
 import userImage from "../../../src/assets/user.png";
 import { useNavigate } from "react-router-dom";
+// import { config } from "../../App";
 
 const Profile = () => {
   const [postData, setPostData] = useState([]);
@@ -21,7 +22,10 @@ const Profile = () => {
   const navigate = useNavigate();
   const searchUserId = localStorage.getItem("searchUser");
   const [userData, setUserData] = useState({});
-  const [isFollow, setFollow] = useState(false);
+  const [isFollow, setFollow] = useState(null);
+  const userId = localStorage.getItem("userId");
+  const [myAccount, setFollowButton] = useState(false);
+  const [friendsData, setFriendsData] = useState([]);
 
   const getPost = async () => {
     try {
@@ -54,9 +58,55 @@ const Profile = () => {
     }
   };
 
+  useEffect(() => {
+    if (searchUserId === userId) {
+      setFollowButton(true);
+    }
+  }, []);
+
   const handleFollow = () => {
     setFollow(!isFollow);
   };
+
+  const addFriend = async () => {
+    const payload = {
+      userId: userId,
+      friendId: searchUserId,
+      following: true,
+    };
+
+    await axios.post(config.backEndpoint + "/friends", payload, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+  const removeFriend = async () => {
+  
+      try {
+        let response = await axios.delete(
+          config.backEndpoint + "/friends/" + searchUserId
+        );
+        console.log(response);
+
+        if (response.data.status === 200) {
+          enqueueSnackbar("you are not following this user anymore");
+        }
+      } catch (error) {
+        return error;
+      }
+    
+  };
+
+  useEffect(() => {
+    if (isFollow === true) {
+      addFriend();
+    }
+    if (isFollow === false) {
+      removeFriend();
+    }
+  }, [isFollow]);
 
   const handleDelete = async (id) => {
     try {
@@ -131,6 +181,22 @@ const Profile = () => {
     }
   }, [token, searchUserId]);
 
+  const getFriendStatus = async () => {
+    try {
+      let response = await axios.get(
+        config.backEndpoint + "/friends/" + userId
+      );
+      response.data.forEach((friend) => {
+        if (friend.friendId === searchUserId) {
+          setFollow(true);
+          setFriendsData((prev) => [...prev, friend]);
+        }
+      });
+    } catch (err) {
+      return err;
+    }
+  };
+
   let getUserData = async () => {
     try {
       let response = await axios.get(
@@ -138,7 +204,6 @@ const Profile = () => {
       );
       if (response.status === 200) {
         setUserData(response.data);
-        console.log(userData);
       } else {
         enqueueSnackbar("failed to fetch user info");
       }
@@ -148,6 +213,7 @@ const Profile = () => {
   };
   useEffect(() => {
     getUserData();
+    getFriendStatus();
   }, [searchUserId]);
 
   return (
@@ -202,12 +268,14 @@ const Profile = () => {
             </div>
             <div>
               {!isFollow ? (
-                <button
-                  onClick={handleFollow}
-                  className=" px-3 py-1 rounded-md text-white hover:bg-blue-800 bg-blue-500"
-                >
-                  Follow
-                </button>
+                !myAccount && (
+                  <button
+                    onClick={handleFollow}
+                    className=" px-3 py-1 rounded-md text-white hover:bg-blue-800 bg-blue-500"
+                  >
+                    Follow
+                  </button>
+                )
               ) : (
                 <button
                   onClick={handleFollow}
