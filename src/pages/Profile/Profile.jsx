@@ -49,7 +49,7 @@ const Profile = () => {
       if (error.response && error.response.status === 401) {
         localStorage.clear();
         navigate("/login");
-        enqueueSnackbar("Session expired. Please log in again.", {
+        enqueueSnackbar("Session expired. Please log in again.",{
           variant: "warning",
         });
       } else {
@@ -95,8 +95,7 @@ const Profile = () => {
         }
       } catch (error) {
         return error;
-      }
-    
+      } 
   };
 
   useEffect(() => {

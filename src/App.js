@@ -10,7 +10,7 @@ import { Routes, Route, Outlet, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export const config = {
-  backEndpoint: "http://localhost:8082/v1",
+  backEndpoint: "https://social-media-web-app-backend.onrender.com/v1",
 };
 
 function App() {
